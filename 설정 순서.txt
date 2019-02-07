@@ -3,6 +3,7 @@
 -java compiler 1.8 변경
 -Project Fasets 1.8 변경
 -pom.xml java 1.8 변경
+-spring (4.3.17.RELEASE)
 
 *database 설정
 pom.xml

@@ -1,6 +1,11 @@
 package org.spring.mvc.controller;
 
+import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
+
 import org.spring.mvc.domain.MemberDTO;
+import org.spring.mvc.service.MemberJoinService;
+import org.spring.mvc.service.MemberLoginService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -8,6 +13,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class MemberJoinController {
 
+	@Inject
+	private MemberJoinService joinService;
+	
+	@Inject
+	private MemberLoginService loginService;
+	
 	@RequestMapping("memberJoinForm")
 	public String regForm() {
 		return "/joinForm";
@@ -15,24 +26,13 @@ public class MemberJoinController {
 	
 	@RequestMapping("memberJoin")
 	public String memberJoin(
-//			@RequestParam("email") String email,
-//			@RequestParam("password") String password,
-//			@RequestParam("name") String name,
-//			@RequestParam(value="photo", required=false, defaultValue="none") String photo,
-			MemberDTO dto
+			MemberDTO dto,
+			HttpSession session
 			) {
-		
-		
-//		MemberDTO dto = new MemberDTO();
-		
-//		dto.setEmail(email);
-//		dto.setPassword(password);
-//		dto.setName(name);
-//		dto.setPhoto(photo);
-//		
 		System.out.println(dto.toString());
+		joinService.Insert(dto);
+		loginService.SelectMember(dto.getEmail(), dto.getPassword(), session);
 		
 		return "redirect:/";
-//		return "/index";
 	}
 }

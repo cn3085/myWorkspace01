@@ -21,13 +21,11 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<!-- 데이터베이스 설정 -->
-	<!-- DataSource, JDBCTemplate, Dao(자동설정:@Repositoory) -->
 	<beans:bean id="dataSource"
 		class="com.mchange.v2.c3p0.ComboPooledDataSource">
 		<beans:property name="driverClass"
 			value="com.mysql.jdbc.Driver" />
-		<beans:property   name="jdbcUrl"   value="jdbc:mysql://mysql.cfjfk3ftmgo9.ap-northeast-2.rds.amazonaws.com/openproject?characterEncoding=utf8" />
+		<beans:property   name="jdbcUrl"   value="jdbc:mysql://mysql.cfjfk3ftmgo9.ap-northeast-2.rds.amazonaws.com/openproject?useSSL=false&amp;characterEncoding=UTF8&amp;useUnicode=true" />
 		<beans:property name="user" value="bit" />
 		<beans:property name="password" value="bit" />
 	</beans:bean>
@@ -38,7 +36,7 @@
 		<beans:property name="dataSource" ref="dataSource" />
 		<!-- sql을 보관하는 mapper들을 등록 -->
 		<beans:property name="mapperLocations"
-			value="classpath:org/spring/mybatis/mapper/mybatis/*.xml" />
+			value="classpath:org/spring/mvc/mappers/*.xml" />
 	</beans:bean>
 
 	<!-- 템플릿 클래스 등록 -->	
@@ -48,7 +46,17 @@
 		<beans:constructor-arg index="0" ref="sqlSessionFactory"/>
 	</beans:bean>
 	
-	<context:component-scan base-package="org.spring.mvc" />
+	<!-- 인터셉터 등록 -->
+	<interceptors>
+		<interceptor>
+			<mapping path="/loginAction"/>
+			<!-- <exclude-mapping path="/mypage/help/**"/> -->
+			<beans:bean class="org.spring.mvc.interceptor.LoginInterceptor"/>
+		</interceptor>
+	</interceptors>
+	
+	
+	<context:component-scan base-package="org.spring.mvc.*" />
 	
 	
 	
