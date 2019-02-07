@@ -21,6 +21,33 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
+	<!-- 데이터베이스 설정 -->
+	<!-- DataSource, JDBCTemplate, Dao(자동설정:@Repositoory) -->
+	<beans:bean id="dataSource"
+		class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<beans:property name="driverClass"
+			value="com.mysql.jdbc.Driver" />
+		<beans:property   name="jdbcUrl"   value="jdbc:mysql://mysql.cfjfk3ftmgo9.ap-northeast-2.rds.amazonaws.com/openproject?characterEncoding=utf8" />
+		<beans:property name="user" value="bit" />
+		<beans:property name="password" value="bit" />
+	</beans:bean>
+
+	<!-- Mybatis SqlSessionFactoryBean 설정 -->
+	<beans:bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!-- 데이터베이스 연결정보 설정, pool 설정 -->
+		<beans:property name="dataSource" ref="dataSource" />
+		<!-- sql을 보관하는 mapper들을 등록 -->
+		<beans:property name="mapperLocations"
+			value="classpath:org/spring/mybatis/mapper/mybatis/*.xml" />
+	</beans:bean>
+
+	<!-- 템플릿 클래스 등록 -->	
+	<beans:bean
+		id="sqlSession"
+		class="org.mybatis.spring.SqlSessionTemplate">
+		<beans:constructor-arg index="0" ref="sqlSessionFactory"/>
+	</beans:bean>
+	
 	<context:component-scan base-package="org.spring.mvc" />
 	
 	

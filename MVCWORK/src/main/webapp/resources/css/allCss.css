@@ -1,0 +1,58 @@
+@charset "UTF-8";
+
+		nav{
+            border-top: 1px solid grey;
+            border-bottom: 1px solid grey;
+        }
+        
+        ul>li{
+            padding-right: 50px;
+            display: inline-block;
+            font-size: 20px;
+            color: black;
+        }
+        
+        li>a:hover{
+            color: white;
+            background-color: grey;
+            
+        }
+        
+        li>a{
+            
+            text-decoration: none;
+            color: black;
+        }
+        
+        #content{
+            display: block;
+            margin: 0 auto;
+            padding: 0 100px;
+/*            border: 1px solid black;*/
+        }
+        
+        #content>div{
+
+            padding: 0 100px;
+            width: 500px;
+        }
+        
+        #content>div>label{
+            display: inline-block;
+            width: 200px;
+            margin: 10px;
+/*            border: 1px solid black;*/
+        }
+        
+        #content>div>input{
+            display: inline-block;
+            clear: both;
+        }
+        
+        #submitBtn{
+            margin: 0 auto;
+            margin-top: 20px;
+            width: 60px;
+            height: 60px;
+            
+        }
