@@ -1,17 +1,18 @@
 package org.spring.mvc.controller;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpSession;
 
-import org.spring.mvc.service.MemberJoinService;
 import org.spring.mvc.service.MemberLoginService;
 import org.spring.mvc.service.MemberLogoutService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 
 @Controller
+@SessionAttributes("dto")
 public class LogController {
 	
 	@Inject
@@ -27,18 +28,18 @@ public class LogController {
 	
 	@RequestMapping("/loginAction")
 	public String logIn(
-			HttpSession session,
+//			HttpSession session,
+			Model model,
 			@RequestParam("email") String email,
 			@RequestParam("password") String password
 			) {
-		loginService.SelectMember(email, password ,session);
+		loginService.SelectMember(email, password ,model);
 		return "/index";
 	}
 	
 	@RequestMapping("/logout")
-	public String logOut(HttpSession session) {
-		logoutService.logOutAction(session);
-		
+	public String logOut(SessionStatus sessionStatus) {
+		logoutService.logOutAction(sessionStatus);
 		return "redirect:/";
 	}
 }

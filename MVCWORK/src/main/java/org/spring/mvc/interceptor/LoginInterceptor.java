@@ -16,7 +16,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		
 		HttpSession session = request.getSession(false);
 		
-		if(session.getAttribute("id") == null) { //로그인 실패면
+		if(session.getAttribute("dto") == null) { //로그인 실패면
 			
 		System.out.println("로그인 실패잖아...");
 		request.setAttribute("msg", "<script>alert('로그인 실패.')</script>");

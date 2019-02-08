@@ -7,6 +7,7 @@ import org.spring.mvc.domain.MemberDTO;
 import org.spring.mvc.service.MemberJoinService;
 import org.spring.mvc.service.MemberLoginService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -27,11 +28,11 @@ public class MemberJoinController {
 	@RequestMapping("memberJoin")
 	public String memberJoin(
 			MemberDTO dto,
-			HttpSession session
+			Model model
 			) {
 		System.out.println(dto.toString());
 		joinService.Insert(dto);
-		loginService.SelectMember(dto.getEmail(), dto.getPassword(), session);
+		loginService.SelectMember(dto.getEmail(), dto.getPassword(), model);
 		
 		return "redirect:/";
 	}

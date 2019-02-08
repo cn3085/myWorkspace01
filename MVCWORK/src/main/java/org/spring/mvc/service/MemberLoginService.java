@@ -8,6 +8,10 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.spring.mvc.domain.MemberDTO;
 import org.spring.mvc.persistence.MemberDAO;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.context.annotation.SessionScope;
 
 @Service
@@ -20,7 +24,22 @@ public class MemberLoginService {
 	
 	MemberDTO dto;
 	
-	public void SelectMember(String email, String password, HttpSession session) {
+	@Transactional
+	public void SelectMember(String email, String password, Model model) {
+		dao = sqlSessionTemplate.getMapper(MemberDAO.class);
+		
+		if(((dto = dao.memberSelect(email))==null)||(!dto.getPassword().equals(password))) { //해당 아이디가 없으면
+			System.out.println("로그인 nonononononono");
+			
+		}else {
+			System.out.println("로그인 됐다!!");
+			model.addAttribute("dto", dto);
+		}
+		
+	}
+	
+	
+	/*public void SelectMember(String email, String password, HttpSession session) {
 		dao = sqlSessionTemplate.getMapper(MemberDAO.class);
 		
 		if(((dto = dao.memberSelect(email))==null)||(!dto.getPassword().equals(password))) { //해당 아이디가 없으면
@@ -29,7 +48,7 @@ public class MemberLoginService {
 		}else {
 			System.out.println("로그인 됐다!!");
 			session.setAttribute("id", dto.getEmail());
-		}
+		}*/
 		
 	}
-}
+

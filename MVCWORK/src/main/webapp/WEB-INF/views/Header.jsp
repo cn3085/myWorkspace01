@@ -14,7 +14,7 @@
         <div>
             <nav>
                 <ul>
-                	<c:set value="${sessionScope.id}" var="LoginStatus"/>
+                	<c:set value="${sessionScope.dto}" var="LoginStatus"/>
                     <c:choose>
 	                    <c:when test="${LoginStatus == null }" >
 	                    	<li><a href="memberJoinForm">회원가입</a></li>
