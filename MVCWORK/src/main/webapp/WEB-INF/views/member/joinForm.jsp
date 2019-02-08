@@ -9,8 +9,8 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/allCss.css">
 </head>
 <body>
-	<%@ include file="Header.jsp" %>
-	<form action="memberJoin" method="post" >
+	<%@ include file="../Header.jsp" %>
+	<form action="/member/Join" method="post" enctype="multipart/form-data">
 	<section id="content">
         <h1>회원가입</h1>
         <hr>
@@ -22,7 +22,7 @@
 	            <label for="name">이름</label>
 	            <input type="text" id="name" name="name">
 	            <label for="photo">사진</label>
-	            <input type="file" id="photo">
+	            <input type="file" id="photo" name="picture">
 	            <input type="submit" value="등록" id="submitBtn" style="display: block;">
         </div>
     </section>

@@ -10,9 +10,6 @@ import org.spring.mvc.persistence.MemberDAO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.SessionAttribute;
-import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.context.annotation.SessionScope;
 
 @Service
 public class MemberLoginService {
@@ -25,30 +22,20 @@ public class MemberLoginService {
 	MemberDTO dto;
 	
 	@Transactional
-	public void SelectMember(String email, String password, Model model) {
+	public void SelectMember(HttpServletRequest request, String email, String password, Model model) {
 		dao = sqlSessionTemplate.getMapper(MemberDAO.class);
-		
+		System.out.println("내가 적은 이메일 : "+email);
+		System.out.println("내가 적은 비번 : "+password);
 		if(((dto = dao.memberSelect(email))==null)||(!dto.getPassword().equals(password))) { //해당 아이디가 없으면
 			System.out.println("로그인 nonononononono");
 			
 		}else {
 			System.out.println("로그인 됐다!!");
-			model.addAttribute("dto", dto);
+			HttpSession session = request.getSession();
+			session.setAttribute("dto", dto);
+			
 		}
 		
 	}
-	
-	
-	/*public void SelectMember(String email, String password, HttpSession session) {
-		dao = sqlSessionTemplate.getMapper(MemberDAO.class);
-		
-		if(((dto = dao.memberSelect(email))==null)||(!dto.getPassword().equals(password))) { //해당 아이디가 없으면
-			System.out.println("로그인 nonononononono");
-			
-		}else {
-			System.out.println("로그인 됐다!!");
-			session.setAttribute("id", dto.getEmail());
-		}*/
-		
-	}
+}
 

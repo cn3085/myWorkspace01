@@ -11,20 +11,32 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 public class LoginInterceptor extends HandlerInterceptorAdapter {
 
 	@Override
-	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView)
-			throws Exception {
-		
+	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
+			ModelAndView modelAndView) throws Exception {
+
 		HttpSession session = request.getSession(false);
-		
-		if(session.getAttribute("dto") == null) { //로그인 실패면
-			
-		System.out.println("로그인 실패잖아...");
-		request.setAttribute("msg", "<script>alert('로그인 실패.')</script>");
-		RequestDispatcher dispatcher =request.getRequestDispatcher(request.getContextPath()+"/login");
-		dispatcher.forward(request, response);
+
+		if (session.getAttribute("dto") == null) { // 로그인 실패면
+
+			System.out.println("로그인 실패잖아...");
+			request.setAttribute("msg", "<script>alert('로그인 안 됐음.')</script>");
+			RequestDispatcher dispatcher = request.getRequestDispatcher(request.getContextPath() + "/login");
+			dispatcher.forward(request, response);
 //		response.sendRedirect(request.getContextPath()+"/login");
 		}
 	}
-	
-	
+
+//	@Override
+//	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+//			throws Exception {
+//		HttpSession session = request.getSession(false);
+//
+//		if (session.getAttribute("dto") == null) { // 로그인 실패면
+//			System.out.println("로그인 실패잖아...");
+//			request.setAttribute("msg", "<script>alert('로그인 안 됐음.')</script>");
+//			RequestDispatcher dispatcher = request.getRequestDispatcher(request.getContextPath() + "/login");
+//			dispatcher.forward(request, response);
+//		}
+//			return false;
+//	}
 }

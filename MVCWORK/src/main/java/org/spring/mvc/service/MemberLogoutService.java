@@ -1,14 +1,15 @@
 package org.spring.mvc.service;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.support.SessionStatus;
 
 @Service
 public class MemberLogoutService {
-	public void logOutAction(SessionStatus sessionStatus) {
+	public void logOutAction(HttpServletRequest request) {
 		System.out.println("로그아웃한다!!!");
-		sessionStatus.setComplete();
+		HttpSession session = request.getSession();
+		session.invalidate();
 	}
 }

@@ -1,11 +1,14 @@
 package org.spring.mvc.domain;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class MemberDTO {
 	
 	private String email;
 	private String password;
 	private String name;
 	private String photo;
+	
 	public String getEmail() {
 		return email;
 	}
@@ -35,6 +38,9 @@ public class MemberDTO {
 	public String toString() {
 		return "MemberDTO [email=" + email + ", password=" + password + ", name=" + name + ", photo=" + photo + "]";
 	}
+	
+	
+	
 	
 	
 	

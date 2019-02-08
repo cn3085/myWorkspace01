@@ -10,4 +10,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-ma
 	<select id="memberSelect" resultType="org.spring.mvc.domain.MemberDTO">
 		select * from member where email = #{email}
 	</select>
+	
+	<select id="memberListSelect" resultType="org.spring.mvc.domain.MemberDTO">
+		select * from member order by id
+	</select>
+	
+	<delete id="memberRemove">
+		delete from member where email = #{email}
+	</delete>
+	
+	<update id="memberEdit">
+		update member set name = #{name}, password = #{password} where email = #{email}
+	</update>
 </mapper>
