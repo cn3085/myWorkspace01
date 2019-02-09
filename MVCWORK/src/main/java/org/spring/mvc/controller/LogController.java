@@ -6,10 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.spring.mvc.service.MemberLoginService;
 import org.spring.mvc.service.MemberLogoutService;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.support.SessionStatus;
 
 @Controller
 //@SessionAttributes("dto")
@@ -29,11 +27,10 @@ public class LogController {
 	@RequestMapping("**/loginAction")
 	public String logIn(
 			HttpServletRequest request,
-			Model model,
 			@RequestParam("email") String email,
 			@RequestParam("password") String password
 			) {
-		loginService.SelectMember(request, email, password ,model);
+		loginService.SelectMember(request, email, password);
 		return "/index";
 	}
 	

@@ -1,6 +1,5 @@
 package org.spring.mvc.domain;
 
-import org.springframework.web.multipart.MultipartFile;
 
 public class MemberDTO {
 	

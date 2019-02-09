@@ -52,7 +52,7 @@ public class MemberController {
 			) {
 		System.out.println(dto.toString());
 		joinService.Insert(request ,dto);
-		loginService.SelectMember(request, dto.getEmail(), dto.getPassword(), model);
+		loginService.SelectMember(request, dto.getEmail(), dto.getPassword());
 		return "redirect:/";
 	}
 	
