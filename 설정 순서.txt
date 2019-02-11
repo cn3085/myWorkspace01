@@ -60,5 +60,23 @@ pom.xml에 등록
 <beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">  <beans:property name="defaultEncoding">   <beans:value>utf-8</beans:value>  </beans:property> </beans:bean>  
 빈 등록 - servlet-Context
 
+** ViewResolver를 통한 파일 다운로드 응답
 
-
+-1. servlet-context.xml
+<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
+	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="/WEB-INF/views/" />
+		<beans:property name="suffix" value=".jsp" />
+		<beans:property name="order" value="2" />
+		<!-- order를 통해서 너의 우선순위는 2라고 준 거임 -->
+	</beans:bean>
+2. viewResolver에 BeanNameViewResolver 빈 등록
+<!-- 커스텀뷰 처리를 위한 Resolver 등록 -->
+	<beans:bean id="viewResolver"
+				class="org.springframework.web.servlet.view.BeanNameViewResolver"
+				p:order="1"
+	 />
+3. 사용할 뷰를 빈으로 등록
+<beans:bean id="download"
+				class="com.bitcamp.cumtomview.DownloadView"
+	 />

@@ -3,6 +3,7 @@ package org.spring.mvc.controller;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
+import org.spring.mvc.domain.MemberDTO;
 import org.spring.mvc.service.MemberLoginService;
 import org.spring.mvc.service.MemberLogoutService;
 import org.springframework.stereotype.Controller;
@@ -27,10 +28,9 @@ public class LogController {
 	@RequestMapping("**/loginAction")
 	public String logIn(
 			HttpServletRequest request,
-			@RequestParam("email") String email,
-			@RequestParam("password") String password
+			MemberDTO dto
 			) {
-		loginService.SelectMember(request, email, password);
+		loginService.SelectMember(request, dto.getEmail(), dto.getPassword());
 		return "/index";
 	}
 	
