@@ -32,7 +32,7 @@
                     	</c:otherwise>
                     </c:choose>
                     <li><a href="/member/Auth/myPage">회원마이페이지(회원)</a></li>
-                    <li><a href="/member/Auth/memberList">회원리스트(회원)</a></li>
+                    <li><a href="/member/Auth/memberList?pageNow=1&perPageNum=10">회원리스트(회원)</a></li>
                 </ul>
             </nav>
         </div>

@@ -3,22 +3,22 @@ package org.spring.mvc.controller;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 
 import org.spring.mvc.domain.MemberDTO;
+import org.spring.mvc.domain.PageCriteria;
 import org.spring.mvc.service.MemberEditService;
 import org.spring.mvc.service.MemberJoinService;
 import org.spring.mvc.service.MemberListService;
 import org.spring.mvc.service.MemberLoginService;
 import org.spring.mvc.service.MemberRemoveService;
+import org.spring.mvc.service.PageSelectService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/member")
@@ -38,6 +38,9 @@ public class MemberController {
 	
 	@Inject
 	private MemberEditService memberEdit;
+	
+	@Inject
+	private PageSelectService pageService;
 	
 	@RequestMapping("/JoinForm")
 	public String regForm() {
@@ -61,12 +64,12 @@ public class MemberController {
 		return "member/Auth/myPage";
 	}
 	
-	@RequestMapping("/Auth/memberList")
-	public String memberList(Model model) {
-		listSelect.memberListSelect(model);
-		
-		return "/member/Auth/memberList";
-	}
+//	@RequestMapping("/Auth/memberList")
+//	public String memberList(Model model) {
+//		listSelect.memberListSelect(model);
+//		
+//		return "/member/Auth/memberList";
+//	}
 	
 	@RequestMapping("/Auth/memberRemove") // 수정 ajax처리
 	@ResponseBody
@@ -88,5 +91,16 @@ public class MemberController {
 		List list=listSelect.memberListSelect();
 		System.out.println(list);
 		return listSelect.memberListSelect();
+	}
+	
+	@RequestMapping("/Auth/memberList")
+	public ModelAndView memberPageList(ModelAndView mav, PageCriteria pcriteria) {
+		List list=listSelect.memberListSelect();
+		pcriteria.setAlldata(list.size());
+		
+		pageService.memberPageListSelect(mav, pcriteria);
+		
+		mav.setViewName("/member/Auth/TempMemberList");
+		return mav;
 	}
 }
