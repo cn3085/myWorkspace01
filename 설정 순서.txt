@@ -80,3 +80,110 @@ pom.xml에 등록
 <beans:bean id="download"
 				class="com.bitcamp.cumtomview.DownloadView"
 	 />
+
+** 메일 발송
+[라이브러리 의존 설정]
+<!-- 필요한 설정-->
+  <!-- spring-context-support -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-context-support</artifactId>
+		    <version>${org.springframework-version}</version>
+		</dependency>
+  <!-- javax.mail-->
+		<dependency>
+		    <groupId>javax.mail</groupId>
+		    <artifactId>mail</artifactId>
+		    <version>1.4.7</version>
+		</dependency>
+  <!-- 메일 설정 시작  -->
+  <!-- ======================================================== -->
+  <!-- javax.mail/mail -->
+  <dependency>
+   <groupId>javax.mail</groupId>
+   <artifactId>mail</artifactId>
+   <version>1.4.7</version>
+  </dependency>
+
+  <dependency>
+   <groupId>org.springframework</groupId>
+   <artifactId>spring-context-support</artifactId>
+   <version>${org.springframework-version}</version>
+  </dependency>
+ 
+  
+
+  <!-- ======================================================== -->
+  
+
+
+[스프링 컨테이너 설정 파일 빈 등록 설정]
+
+
+
+<beans:bean id="mailSender"
+  class="org.springframework.mail.javamail.JavaMailSenderImpl">
+  <beans:property name="host" value="smtp.gmail.com" /> //SMTP host 서버 주소
+  <beans:property name="port" value="587" /><!-- 465 or 25--> // 기본이 25인데 달라지기도 함
+  <beans:property name="username" value="[gmail 계정]" /> // setFrom() 메소드에서 내가 적고 싶은 보내는 사람 메일 주소 써도 일단 사용자는 여기 있는 gmail 계정이 들어간다. 왜냐면 보안
+  <beans:property name="password" value="[비밀번호]" />
+  <beans:property name="defaultEncoding" value="utf-8" />
+  <beans:property name="javaMailProperties">
+   <beans:props><!-- 요거는 지메일일때 쓰는 속성들 -->
+    <beans:prop key="mail.transport.protocol">smtp</beans:prop>
+    <beans:prop key="mail.smtp.auth">true</beans:prop> // gmail 사용자 인증 받아야 메일 보낼 수 있다
+    <beans:prop key="mail.smtp.starttls.enable">true</beans:prop>
+    <beans:prop key="mail.debug">true</beans:prop> // 메일 보낼 때 밑에다가 로그를 찍어줍니다
+   </beans:props>
+  </beans:property>
+ </beans:bean>
+
+
+
+
+
+[sendMail 클래스]
+
+package com.bitcamp.memberboard.mail;
+
+import java.io.UnsupportedEncodingException;
+import java.security.GeneralSecurityException;
+import java.security.NoSuchAlgorithmException;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailException;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.SimpleMailMessage;
+
+import com.bitcamp.memberboard.member.model.Member;
+public class SimpleRegistrationNotifier {
+ @Autowired
+ private MailSender mailSender;
+ 
+ public void sendMail(Member member) {
+  SimpleMailMessage message = new SimpleMailMessage();
+  message.setSubject("[Simple] 회원 가입을 축하합니다.");
+  message.setFrom("isincorp@gmail.com");
+  message.setText("회원 가입을 환영합니다.");
+  message.setTo(member.getMemberid());
+  try {
+   mailSender.send(message);
+  } catch (MailException ex) {
+   ex.printStackTrace();
+  }
+ }
+
+ public void sendMail(String memberemail) {
+  SimpleMailMessage message = new SimpleMailMessage();
+  message.setSubject("[Simple] 회원 가입 안내");
+  message.setFrom("isisncorp@gmail.com");
+  message.setText("회원 가입을 환영합니다.");
+  message.setTo(memberemail);
+  try {
+   mailSender.send(message);
+  } catch (MailException ex) {
+   ex.printStackTrace();
+  }
+
+ }
+}
