@@ -75,7 +75,7 @@ public class MemberController {
 	
 	@RequestMapping("/Auth/memberRemove") // 삭제 ajax 처리
 	@ResponseBody
-	public List<MemberDTO> memberRemove(String email, Model model, PageCriteria pcriteria) {
+	public Map memberRemove(String email, Model model, PageCriteria pcriteria) {
 		System.out.println("컨트롤러에서 받은 이메일 : " + email);
 		memberRemove.MemberRemove(email);
 		List list=listSelect.memberListSelect();
@@ -83,11 +83,11 @@ public class MemberController {
 		List returnlist=pageService.memberPageListSelect(pcriteria);
 		
 		Map map = new HashMap();
-		map.put("list", list);
+		map.put("list", returnlist);
 		map.put("pcriteria", pcriteria);
 		
 		System.out.println(list);
-		return returnlist;
+		return map;
 	}
 	
 	@RequestMapping("/Auth/memberEdit") // 수정 ajax처리

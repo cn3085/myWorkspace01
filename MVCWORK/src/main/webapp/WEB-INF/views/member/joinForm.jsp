@@ -16,7 +16,7 @@
         <hr>
         <div>
 	            <label for="email">아이디(이메일)</label>
-	            <input type="email" id="email" name="email">
+	            <input type="text" id="email" name="email">
 	            <label for="password">비밀번호</label>
 	            <input type="password" id="password" name="password">
 	            <label for="name">이름</label>

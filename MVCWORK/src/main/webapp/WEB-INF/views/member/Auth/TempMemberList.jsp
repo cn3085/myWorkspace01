@@ -36,7 +36,7 @@
 			        	<td><c:out value="${list.email}"/></td>
 			        	<td><c:out value="${list.password}"/></td>
 			        	<td><c:out value="${list.name}"/></td>
-			        	<td><a href="#" class="edit">수정</a> / <a href="#" class="delete">삭제</a></td>
+			        	<td><a href="" class="edit">수정</a> / <a href="" class="delete">삭제</a></td>
 			        	</tr>
 			        </c:forEach>
 		        </tbody>
@@ -68,16 +68,15 @@
 	        $(document).on('click','.edit',Edit);
 	        $('#close').click(Close);
 	        $('#editBtn').click(EditAction);
+	        $('a').pre
 	        boardListShow();
 	        var email;
+	        $(document).on('click','#tableContent a',function(event) {
+                event.preventDefault();
+            });
 	    }
 	    
 	    function boardListShow(){
-			/* <c:forEach var="idx" begin="1" end="${pcriteria.pageList}" >
-				$('#boardPage').append('<a href="<c:out value="/member/Auth/memberList?pageNow=${idx}&perPageNum=${pcriteria.perPageNum}"/>">${idx}</a>');
-    		</c:forEach> */
-    		console.log("리스트 나와랴");
-    		console.log($('#boardPage'));
 	    	for(var i=1; i<=${pcriteria.pageList}; i++){
 				$('#boardPage').append('<a href="/member/Auth/memberList?pageNow='+i+'&perPageNum='+${pcriteria.perPageNum}+'">'+i+'</a>');
 			}
@@ -107,26 +106,29 @@
 					,type : 'get'
 					,data: {email:email}
 					,success : function(data) {
+						console.log('data')
 						console.log(data)
+						console.log('data.pcriteria.pageList')
+						console.log(data.pcriteria.pageList)
+						console.log('data.list')
+						console.log(data.list)
 						$('#tableContent').empty();
 						$('#boardPage').empty();
-						boardListShow();
 						
-						for(var i=1; i<=; i++){
-							$('#boardPage').append('<a href="/member/Auth/memberList?pageNow='+i+'&perPageNum='++'">'+i+'</a>');
-						}
-			
-		    			
-						$.each(data, function(i, val) {
+						
+						$.each(data.list, function(i, val) {
 							console.log($(this))
-							$('#tableContent').append(
-									'<tr><td>'
-											+val.email+ '</td><td>'
-											+val.password+ '</td><td>'
-											+val.name+ '</td>'
-											+ '<td><a href="#" class="edit">수정</a> / <a href="#" class="delete">삭제</a></td>');
+									$('#tableContent').append(
+										'<tr><td>'
+										+val.email+ '</td><td>'
+										+val.password+ '</td><td>'
+										+val.name+ '</td>'
+										+ '<td><a href="" class="edit">수정</a> / <a href="" class="delete">삭제</a></td>');
 						});
 						
+							for(var i=1; i<=data.pcriteria.pageList; i++){
+								$('#boardPage').append('<a href="/member/Auth/memberList?pageNow='+i+'&perPageNum='+data.pcriteria.perPageNum+'">'+i+'</a>');
+							}
 					},
 					error : function(data) {
 						console.log('error')
