@@ -1,6 +1,8 @@
 package org.spring.mvc.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -80,6 +82,9 @@ public class MemberController {
 		pcriteria.setAlldata(list.size());
 		List returnlist=pageService.memberPageListSelect(pcriteria);
 		
+		Map map = new HashMap();
+		map.put("list", list);
+		map.put("pcriteria", pcriteria);
 		
 		System.out.println(list);
 		return returnlist;
