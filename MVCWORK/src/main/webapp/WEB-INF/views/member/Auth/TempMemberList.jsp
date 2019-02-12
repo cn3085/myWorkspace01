@@ -43,6 +43,8 @@
 	        </table>
         </div>
         
+        <div id="boardPage">
+        </div>
         <c:forEach var="idx" begin="1" end="${pcriteria.pageList}" >
 	        	<a href="<c:out value="/member/Auth/memberList?pageNow=${idx}&perPageNum=${pcriteria.perPageNum}"/>">${idx}</a>
         </c:forEach>
@@ -88,7 +90,7 @@
 			}else{
 				email=$(this).parent().parent().children(':eq(0)').text();
 				$.ajax({
-					url : '/member/Auth/memberRemove',
+					url : '/member/Auth/memberRemove?pageNow=${pcriteria.pageNow}&perPageNum=${pcriteria.perPageNum}',
 					dataType : 'json'
 					,type : 'get'
 					,data: {email:email}
@@ -122,7 +124,7 @@
 	    	console.log("패수워드 : "+password);
 	    	console.log("이름 : "+name);
 	    	$.ajax({
-				url : '/member/Auth/memberEdit',
+				url : '/member/Auth/memberEdit?pageNow=${pcriteria.pageNow}&perPageNum=${pcriteria.perPageNum}',
 				dataType : 'json'
 				,data: {email:email, password:password, name:name}
 				,success : function(data) {

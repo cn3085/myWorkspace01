@@ -7,6 +7,7 @@ public class PageCriteria {
 	private int pageStart;
 	private int pageEnd;
 	private int pageList;
+	private int showNum;
 	
 	public int getAlldata() {
 		return Alldata;
@@ -44,10 +45,17 @@ public class PageCriteria {
 	public void setPageList(int pageList) {
 		this.pageList = pageList;
 	}
+	public int getShowNum() {
+		return showNum;
+	}
+	public void setShowNum(int showNum) {
+		this.showNum = showNum;
+	}
 	@Override
 	public String toString() {
 		return "PageCriteria [Alldata=" + Alldata + ", pageNow=" + pageNow + ", perPageNum=" + perPageNum
-				+ ", pageStart=" + pageStart + ", pageEnd=" + pageEnd + ", pageList=" + pageList + "]";
+				+ ", pageStart=" + pageStart + ", pageEnd=" + pageEnd + ", pageList=" + pageList + ", showNum="
+				+ showNum + "]";
 	}
 	
 	

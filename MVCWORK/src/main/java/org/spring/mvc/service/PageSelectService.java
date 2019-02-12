@@ -24,14 +24,15 @@ public class PageSelectService {
 		int Alldata = pcriteria.getAlldata(); //전체 데이터 개수
 		int pageNow = pcriteria.getPageNow(); // 현재 페이지 어디지?
 		int perPageNum = pcriteria.getPerPageNum(); // 한 페이지에 몇 개 보여줄 건지
-		
 		int pageStart = Alldata-((pageNow-1)*perPageNum); // 맨 위에 몇 번 게시글 보여줄 건지
-		int pageEnd = pageStart<perPageNum?1:pageStart-perPageNum+1; // 보여지는 게시물 + 몇 개 보여줄건지
+		int pageEnd = pageStart<perPageNum?0:pageStart-perPageNum; // 보여지는 게시물 + 몇 개 보여줄건지
+		int showNum = pageEnd==0?pageStart:perPageNum;
 		int pageList = Alldata%perPageNum==0?Alldata/perPageNum:Alldata/perPageNum+1;//페이징 몇개?
 		
 		pcriteria.setPageStart(pageStart);
 		pcriteria.setPageEnd(pageEnd);
 		pcriteria.setPageList(pageList);
+		pcriteria.setShowNum(showNum);
 	}
 	
 	@Transactional
@@ -48,6 +49,19 @@ public class PageSelectService {
 		System.out.println(list);
 		mav.addObject("list", list);
 		mav.addObject("pcriteria", pcriteria);
+	}
+	
+	@Transactional
+	public List<MemberDTO> memberPageListSelect(PageCriteria pcriteria) {
+		
+		dao=sqlSessionTemplate.getMapper(MemberDAO.class);
+		
+		System.out.println("세팅 전"+pcriteria.toString());
+		pagingVarSetting(pcriteria);
+		System.out.println("세팅 후"+pcriteria.toString());
+		
+		List<MemberDTO> list = dao.memberPageListSelect(pcriteria);
+		return list;
 	}
 	
 

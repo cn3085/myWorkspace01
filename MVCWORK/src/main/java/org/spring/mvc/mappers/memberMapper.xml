@@ -26,7 +26,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-ma
 	<select id="memberPageListSelect"
 	parameterType="org.spring.mvc.domain.PageCriteria"
 	resultType="org.spring.mvc.domain.MemberDTO">
-		select * from member limit #{pageEnd}, #{pageStart}
+		<!-- select * from member order by id desc limit #{pageEnd}, #{showNum} -->
+		select * from (select * from member limit #{pageEnd},#{showNum}) as k  order by k.id desc;
 		<!-- select * from member limit 0, 10 -->
 	</select>
 </mapper>

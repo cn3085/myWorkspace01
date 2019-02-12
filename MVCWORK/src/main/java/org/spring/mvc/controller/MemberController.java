@@ -71,26 +71,33 @@ public class MemberController {
 //		return "/member/Auth/memberList";
 //	}
 	
-	@RequestMapping("/Auth/memberRemove") // 수정 ajax처리
+	@RequestMapping("/Auth/memberRemove") // 삭제 ajax 처리
 	@ResponseBody
-	public List<MemberDTO> memberRemove(String email, Model model) {
+	public List<MemberDTO> memberRemove(String email, Model model, PageCriteria pcriteria) {
 		System.out.println("컨트롤러에서 받은 이메일 : " + email);
 		memberRemove.MemberRemove(email);
 		List list=listSelect.memberListSelect();
+		pcriteria.setAlldata(list.size());
+		List returnlist=pageService.memberPageListSelect(pcriteria);
+		
+		
 		System.out.println(list);
-		return listSelect.memberListSelect();
+		return returnlist;
 	}
 	
-	@RequestMapping("/Auth/memberEdit") // 삭제 ajax 처리
+	@RequestMapping("/Auth/memberEdit") // 수정 ajax처리
 	@ResponseBody
-	public List<MemberDTO> memberEdit(MemberDTO dto, Model model) {
+	public List<MemberDTO> memberEdit(MemberDTO dto, Model model, PageCriteria pcriteria) {
 		System.out.println("수정하고 싶군요 : "+ dto.toString());
 		
 		memberEdit.MemberEdit(dto);
 		
 		List list=listSelect.memberListSelect();
+		pcriteria.setAlldata(list.size());
+		List returnlist=pageService.memberPageListSelect(pcriteria);
+		
 		System.out.println(list);
-		return listSelect.memberListSelect();
+		return returnlist;
 	}
 	
 	@RequestMapping("/Auth/memberList")
